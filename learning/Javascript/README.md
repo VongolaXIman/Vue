@@ -1,5 +1,11 @@
 # Javascript
 Self-Learning
+```
+const — 一般使用在識別值(identifier)不會被重新指定值。
+let — 一般使用在變數(variable)可能會被重新指定值。
+var — 在ES6推出“let”宣告方法後，JavaScript最弱的變數宣告，問題: 區域變數覆蓋全域變數或者for loop循環變數洩漏為全域變數
+```
+![](https://miro.medium.com/max/512/1*3uXxMQHwJd-ecA2VnlD5rA.png)
 
 ## stringObject.length;
 ```
