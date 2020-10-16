@@ -61,3 +61,24 @@ v-else 條件2
 
 ### 生命週期
 [https://medium.com/pierceshih/vue-js-%E5%AD%B8%E7%BF%92%E7%AD%86%E8%A8%98-day14-vue%E7%94%9F%E5%91%BD%E9%80%B1%E6%9C%9F-65bc934dfd47](http://)
+
+### Guards Methods 
+```
+const router = new Router({
+  mode: 'history',
+  routes: [
+    {
+      path: '/helloworld',
+      component: HelloWorld,
+      beforeEnter (to, from, next) {
+        next();
+      }
+    }
+  ]
+});
+```
+beforeEach 每個路由要被執行之前，都會先經過這裡，他會傳入三個參數：  
+to 你要去的路由位置。  
+from 你從哪一個路由位置進來，如果沒有，預設是 null。  
+next() 繼續往下執行的回呼函式，你必須要呼叫他才能繼續執行。  
+[https://ithelp.ithome.com.tw/articles/10214740](http://)
