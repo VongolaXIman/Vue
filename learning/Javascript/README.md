@@ -137,3 +137,30 @@ myStr.split(":"); /* 2,3,4,5 */
 var myStr = "A|B|C|D|E|FG"
 myStr.split("|"); /* A,B,C,D,E,FG */
 ```
+
+## JavaScript encodeURIComponent()/decodeURIComponent() Function
+```
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Click the button to decode a URI after encoding it.</p>
+
+<button onclick="myFunction()">Try it</button>
+
+<p id="demo"></p>
+
+<script>
+function myFunction() {
+  var uri = "https://w3schools.com/my test.asp?name=ståle&car=saab";
+  var uri_enc = encodeURIComponent(uri);
+  var uri_dec = decodeURIComponent(uri_enc);
+  var res = "Encoded URI: " + uri_enc + "<br>" + "Decoded URI: " + uri_dec;
+  document.getElementById("demo").innerHTML = res;
+}
+</script>
+
+</body>
+</html>
+```
+[https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_decodeuricomponent](http://)
