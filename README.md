@@ -1,6 +1,15 @@
 # Vue
 Self-Learning
 
+# VSCode plugin
+[https://www.jianshu.com/p/23a5d6194a4b](http://)  
+[https://noob.tw/eslint/](http://)  
+ESLint  
+Vetur  
+[https://github.com/VongolaXIman/Vue/blob/main/learning/pic/1.PNG](http://)  
+EditorConfig fo VS Code  
+EditorConfigGenerator
+
 ## 安裝 node.js
 LTS 版本
 
