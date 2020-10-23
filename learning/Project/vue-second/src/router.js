@@ -8,13 +8,13 @@ const routes = [
     path: '/product',
     name: 'product',
     component: () => import('./components/ProductList.vue'),
-    },
-    {
+  },
+  {
     path: '/product/:id',
     name: 'productInfo',
     component: () => import('./components/ProductInfo.vue'),
-    },
-    { path: '*', redirect: '/product' },
+  },
+  { path: '*', redirect: '/product' },
 ];
 
 const router = new VueRouter({
