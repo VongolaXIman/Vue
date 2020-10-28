@@ -56,7 +56,7 @@ export default {
   methods: {
     getOrders(currentPage = 1) {
       const vm = this;
-      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/orders?page=${currentPage}`;
+      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/orders?page=${currentPage}`;
       vm.isLoading = true;
       this.$http.get(url, vm.tempProduct).then((response) => {
         vm.orders = response.data.orders;
