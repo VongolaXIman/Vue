@@ -3,17 +3,32 @@
     <form class="form-signin" @submit.prevent="signin">
       <h1 class="h3 mb-3 font-weight-normal">請先登入</h1>
       <label for="inputEmail" class="sr-only">Email address</label>
-      <input type="email" id="inputEmail" class="form-control"
-        placeholder="Email address" v-model="user.username" required autofocus>
+      <input
+        type="email"
+        id="inputEmail"
+        class="form-control"
+        placeholder="Email address"
+        v-model="user.username"
+        required
+        autofocus
+      />
       <label for="inputPassword" class="sr-only">Password</label>
-      <input type="password" id="inputPassword"
-        class="form-control" v-model="user.password" placeholder="Password" required>
+      <input
+        type="password"
+        id="inputPassword"
+        class="form-control"
+        v-model="user.password"
+        placeholder="Password"
+        required
+      />
       <div class="checkbox mb-3">
         <label>
-          <input type="checkbox" value="remember-me"> Remember me
+          <input type="checkbox" value="remember-me" /> Remember me
         </label>
       </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">
+        Sign in
+      </button>
       <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
     </form>
   </div>
@@ -32,11 +47,16 @@ export default {
   },
   methods: {
     signin() {
-      const api = `${process.env.APIPATH}/signin`;
+      const api = `${process.env.APIPATH}/admin/signin`;
       const vm = this;
       this.$http.post(api, vm.user).then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         if (response.data.success) {
+          const token = response.data.token;
+          const expired = response.data.expired;
+          // console.log(token, expired);
+
+          document.cookie = `hexToken=${token};expires=${new Date(expired)};`;
           vm.$router.push('/admin/products');
         }
       });

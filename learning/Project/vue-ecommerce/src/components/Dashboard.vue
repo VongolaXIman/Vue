@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Navbar/>
+    <Navbar />
     <Alert></Alert>
     <div class="container-fluid">
       <div class="row">
@@ -23,6 +23,11 @@ export default {
     Sidebar,
     Navbar,
     Alert,
+  },
+  created() {
+    const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1');
+    // console.log(token);
+    this.$http.defaults.headers.common.Authorization = `${token}`;
   },
 };
 </script>

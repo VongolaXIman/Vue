@@ -12,9 +12,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, key) in sortOrder" :key="key"
+        <tr
+          v-for="(item, key) in sortOrder"
+          :key="key"
           v-if="orders.length"
-          :class="{'text-secondary': !item.is_paid}">
+          :class="{ 'text-secondary': !item.is_paid }"
+        >
           <td>{{ item.create_at | date }}</td>
           <td><span v-text="item.user.email" v-if="item.user"></span></td>
           <td>
@@ -56,7 +59,7 @@ export default {
   methods: {
     getOrders(currentPage = 1) {
       const vm = this;
-      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/orders?page=${currentPage}`;
+      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/orders?page=${currentPage}`;
       vm.isLoading = true;
       this.$http.get(url, vm.tempProduct).then((response) => {
         vm.orders = response.data.orders;

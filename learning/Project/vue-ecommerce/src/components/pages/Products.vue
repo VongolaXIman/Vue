@@ -315,11 +315,11 @@ export default {
       $('#productModal').modal('show');
     },
     updateProduct() {
-      let api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/product`; // 'http://localhost:3000/api/casper/products';
+      let api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/product`; // 'http://localhost:3000/api/casper/products';
       let httpMethod = 'post';
       const vm = this;
       if (!vm.isNew) {
-        api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/product/${vm.tempProduct.id}`;
+        api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/product/${vm.tempProduct.id}`;
         httpMethod = 'put';
       }
       console.log(process.env.APIPATH, process.env.CUSTOMPATH);
@@ -343,7 +343,7 @@ export default {
     },
     delProduct() {
       const vm = this;
-      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/product/${vm.tempProduct.id}`;
+      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/product/${vm.tempProduct.id}`;
       this.$http.delete(url).then((response) => {
         console.log(response, vm.tempProduct);
         $('#delProductModal').modal('hide');
@@ -357,7 +357,7 @@ export default {
       const vm = this;
       const formData = new FormData();
       formData.append('file-to-upload', uploadedFile);
-      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/upload`;
+      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/upload`;
       vm.status.fileUploading = true;
       this.$http.post(url, formData, {
         headers: {

@@ -26,50 +26,87 @@
             <span v-else class="text-muted">未起用</span>
           </td>
           <td>
-            <button class="btn btn-outline-primary btn-sm"
+            <button
+              class="btn btn-outline-primary btn-sm"
               @click="openCouponModal(false, item)"
-            >編輯</button>
+            >
+              編輯
+            </button>
           </td>
         </tr>
       </tbody>
     </table>
-    <div class="modal fade" id="couponModal" tabindex="-1" role="dialog"
-      aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div
+      class="modal fade"
+      id="couponModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
             <div class="form-group">
               <label for="title">標題</label>
-              <input type="text" class="form-control" id="title" v-model="tempCoupon.title"
-                placeholder="請輸入標題">
+              <input
+                type="text"
+                class="form-control"
+                id="title"
+                v-model="tempCoupon.title"
+                placeholder="請輸入標題"
+              />
             </div>
             <div class="form-group">
               <label for="coupon_code">優惠碼</label>
-              <input type="text" class="form-control" id="coupon_code" v-model="tempCoupon.code"
-                placeholder="請輸入優惠碼">
+              <input
+                type="text"
+                class="form-control"
+                id="coupon_code"
+                v-model="tempCoupon.code"
+                placeholder="請輸入優惠碼"
+              />
             </div>
             <div class="form-group">
               <label for="due_date">到期日</label>
-              <input type="date" class="form-control" id="due_date"
-                v-model="due_date">
+              <input
+                type="date"
+                class="form-control"
+                id="due_date"
+                v-model="due_date"
+              />
             </div>
             <div class="form-group">
               <label for="price">折扣百分比</label>
-              <input type="number" class="form-control" id="price"
-                v-model="tempCoupon.percent" placeholder="請輸入折扣百分比">
+              <input
+                type="number"
+                class="form-control"
+                id="price"
+                v-model="tempCoupon.percent"
+                placeholder="請輸入折扣百分比"
+              />
             </div>
             <div class="form-group">
               <div class="form-check">
-                <input class="form-check-input" type="checkbox"
+                <input
+                  class="form-check-input"
+                  type="checkbox"
                   :true-value="1"
                   :false-value="0"
-                  v-model="tempCoupon.is_enabled" id="is_enabled">
+                  v-model="tempCoupon.is_enabled"
+                  id="is_enabled"
+                />
                 <label class="form-check-label" for="is_enabled">
                   是否啟用
                 </label>
@@ -77,9 +114,16 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary"
-              @click="updateCoupon">更新優惠券</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary" @click="updateCoupon">
+              更新優惠券
+            </button>
           </div>
         </div>
       </div>
@@ -96,6 +140,7 @@ export default {
   },
   data() {
     return {
+      isLoading: false,
       coupons: {},
       tempCoupon: {
         title: '',
@@ -130,7 +175,7 @@ export default {
     },
     getCoupons() {
       const vm = this;
-      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/coupons`;
+      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/coupons`;
       this.$http.get(url, vm.tempProduct).then((response) => {
         vm.coupons = response.data.coupons;
         console.log(response);
@@ -139,14 +184,14 @@ export default {
     updateCoupon() {
       const vm = this;
       if (vm.isNew) {
-        const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/coupon`;
+        const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/coupon`;
         this.$http.post(url, { data: vm.tempCoupon }).then((response) => {
           console.log(response, vm.tempCoupon);
           $('#couponModal').modal('hide');
           this.getCoupons();
         });
       } else {
-        const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/coupon/${vm.tempCoupon.id}`;
+        const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/admin/coupon/${vm.tempCoupon.id}`;
         vm.due_date = new Date(vm.tempCoupon.due_date * 1000);
         this.$http.put(url, { data: vm.tempCoupon }).then((response) => {
           console.log(response);
