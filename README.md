@@ -146,3 +146,69 @@ class Student {
 # 轉換成 Enum 
 [JsonConverter(typeof(JsonStringEnumConverter))]
 ```
+
+## .Net Core-EntityFramework效能寫法
+
+``` bash
+# 立即執行與延遲執行
+//在學習 Linq to Objects 的時候會有立即執行與延遲執行，同樣的在 Linq to Entities 也適用，比如 .Count()、.ToList()，是立即執行，它們會立即對 SQL 發動命令；where 則是延遲執行，需要調用 ToList()、或是 foreach 命令，才會把命令丟給 SQL，以下區段，有經驗的開發者，一眼就能看出問題
+
+void Main()
+{
+	using (var dbContext = new AdventureWorksDbContext())
+	{
+		dbContext.People
+				 .Where(p => p.BusinessEntityID == 1)
+				 .Select(p => new
+				 {
+					 p.BusinessEntityID,
+					 p.ModifiedDate
+				 })
+				 .ToList()
+				 .Dump("取回過濾後資料");
+
+	}
+}
+
+# 查詢後不快取
+//EF 預設會將已查詢的結果 cache 起來放兩份一份在 DbContext，一份在DbContext.DbSet.Local，若你不需要快取資料，調用 AsNoTracking
+void Main()
+{
+      var db = new AdventureWorks2012DbContext();
+       var query1 = db.People.Where(p => p.BusinessEntityID == 1).Select (p => 
+    new
+    {
+        p.BusinessEntityID,    
+        p.ModifiedDate
+    });
+       query1.AsNoTracking().Dump();
+}
+
+# 用不到消極試載入時，關閉它
+//假若，開發架構有分 DAL，查完之後就會關閉連線，也就是調用 ToList、FirstOrDefault 等等立即執行的方法，直接回傳資料，不會讓用戶使用消極式載入，這時就用不到 Lazy Loading ，就可以關掉它
+
+//產生Proxy object，用來處理關聯式資料消極式載入 Lazy Loading
+dbContext.Configuration.ProxyCreationEnabled = false;
+//消極式載入
+dbContext.Configuration.LazyLoadingEnabled = false;
+```
+
+# 停用追蹤狀態
+//db.Configuration.AutoDetectChangesEnabled = false;
+
+void Main()
+{
+	using (var dbContext = CreateDbContext())
+	{
+		dbContext.People.FirstOrDefault().Dump();
+	}
+
+	AdventureWorksDbContext CreateDbContext()
+	{
+		var dbContext = new AdventureWorksDbContext();
+		dbContext.Configuration.AutoDetectChangesEnabled = false;
+		dbContext.Configuration.LazyLoadingEnabled = false;
+		dbContext.Configuration.ProxyCreationEnabled = false;
+		return dbContext;
+	
+```
