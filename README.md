@@ -191,7 +191,6 @@ void Main()
 dbContext.Configuration.ProxyCreationEnabled = false;
 //消極式載入
 dbContext.Configuration.LazyLoadingEnabled = false;
-```
 
 # 停用追蹤狀態
 //db.Configuration.AutoDetectChangesEnabled = false;
@@ -210,5 +209,6 @@ void Main()
 		dbContext.Configuration.LazyLoadingEnabled = false;
 		dbContext.Configuration.ProxyCreationEnabled = false;
 		return dbContext;
-	
+	}
+}
 ```
