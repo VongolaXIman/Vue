@@ -91,3 +91,58 @@ to 你要去的路由位置。
 from 你從哪一個路由位置進來，如果沒有，預設是 null。  
 next() 繼續往下執行的回呼函式，你必須要呼叫他才能繼續執行。  
 [https://ithelp.ithome.com.tw/articles/10214740](http://)
+
+## .Net Core-api回傳json處理方法
+
+``` bash
+using System.Text.Json;
+
+# 假設有個 Student 類別
+class Student {
+    public string Name { get; set; }
+    public int Age { get; set; }
+}
+
+# JsonSerializer.Serialize() 方法將物件序列化成 JSON 文字
+var student = new Student {
+    Name = "Poy Chang",
+    Age = 20
+};
+var json = JsonSerializer.Serialize<Student>(student);
+//結果: {"Name":"Poy Chang","Age":20}
+
+# 格式化排版
+var options = new JsonSerializerOptions
+{
+    WriteIndented = true
+};
+var json = JsonSerializer.Serialize<Student>(student, options);
+//結果:
+{
+  "Name": "Poy Chang",
+  "Age": 20
+}
+
+# 將文字反序列化成物件
+var json = "{\"Name\":\"Poy Chang\",\"Age\":20}";
+var student = JsonSerializer.Deserialize<Student>(json);
+
+# 動調整序列化後的屬性名稱，而不想更動 C# 原本的屬性名稱
+using System.Text.Json.Serialization;
+
+class Student {
+    [JsonPropertyName("studentName")]
+    public string Name { get; set; }
+    [JsonPropertyName("studentAge")]
+    public int Age { get; set; }
+}
+
+//結果:
+{
+  "studentName": "Poy Chang",
+  "studentAge": 20
+}
+
+# 轉換成 Enum 
+[JsonConverter(typeof(JsonStringEnumConverter))]
+```
